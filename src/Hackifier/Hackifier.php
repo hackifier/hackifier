@@ -14,7 +14,7 @@ declare(strict_types=1);
 namespace Hackifier;
 
 use Facebook\HHAST\EditableList;
-use PhpParser\Node\Stmt;
+use PhpParser\Node;
 
 final class Hackifier implements IParser, ITransformer, ICompiler
 {
@@ -45,23 +45,23 @@ final class Hackifier implements IParser, ITransformer, ICompiler
 
     public function convert(string $php): string
     {
-        $stmts = $this->parse($php);
-        $ast = $this->transform(...$stmts);
+        $nodes = $this->parse($php);
+        $ast = $this->transform(...$nodes);
 
         return $this->compile($ast);
     }
 
     /**
-     * @return \PhpParser\Node\Stmt[]
+     * @return Node[]
      */
     public function parse(string $code): array
     {
         return $this->parser->parse($code);
     }
 
-    public function transform(Stmt ...$stmts): EditableList
+    public function transform(Node ...$nodes): EditableList
     {
-        return $this->transformer->transform(...$stmts);
+        return $this->transformer->transform(...$nodes);
     }
 
     public function compile(EditableList $ast): string

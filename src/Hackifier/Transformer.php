@@ -15,51 +15,50 @@ namespace Hackifier;
 
 use Facebook\HHAST\EditableList;
 use Facebook\HHAST\EditableNode;
-use Hackifier\Transformer\IStatementTransformer;
-use PhpParser\Node\Stmt;
+use Hackifier\Transformer\INodeTransformer;
+use HH\Lib\Vec;
+use PhpParser\Node;
 
 class Transformer implements ITransformer
 {
     /**
-     * @var array<int, IStatementTransformer<Stmt>>
+     * @var array<int, INodeTransformer<Node>>
      */
     private $transformers;
 
     /**
-     * @param array<int, IStatementTransformer<Stmt>> $transformers
+     * @param array<int, INodeTransformer<Node>> $transformers
      */
-    public function __construct(IStatementTransformer ...$transformers)
+    public function __construct(INodeTransformer ...$transformers)
     {
         $this->transformers = $transformers;
     }
 
     /**
-     * @param IStatementTransformer<Stmt> $transformer
+     * @param INodeTransformer<Node> $transformer
      */
-    public function addStatementTransformer(IStatementTransformer $transformer): void
+    public function addStatementTransformer(INodeTransformer $transformer): void
     {
         $this->transformers[] = $transformer;
     }
 
-    public function transform(Stmt ...$stmts): EditableList
+    public function transform(Node ...$nodes): EditableList
     {
-        $nodes = [];
-
-        foreach ($stmts as $stmt) {
-            $nodes[] = $this->transformStmt($stmt);
-        }
+        $nodes = Vec\map($nodes, function (Node $node): EditableNode {
+            return $this->transformNode($node);
+        });
 
         return new EditableList($nodes);
     }
 
-    private function transformStmt(Stmt $stmt): EditableNode
+    private function transformNode(Node $node): EditableNode
     {
         foreach ($this->transformers as $transformer) {
-            if ($transformer->supports($stmt)) {
-                return $transformer->transform($stmt, $this);
+            if ($transformer->supports($node)) {
+                return $transformer->transform($node, $this);
             }
         }
 
-        throw new Exception\UnsupportedStmtException($stmt);
+        throw new Exception\UnsupportedNodeException($node);
     }
 }

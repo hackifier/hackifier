@@ -15,17 +15,17 @@ namespace Hackifier\Transformer;
 
 use Facebook\HHAST\EditableNode;
 use Hackifier\ITransformer;
-use PhpParser\Node\Stmt;
+use PhpParser\Node;
 
 /**
- * @template T as \PhpParser\Node\Stmt
+ * @template T as Node
  */
-interface IStatementTransformer
+interface INodeTransformer
 {
     /**
-     * @param T $stmt
+     * @param T $node
      */
-    public function transform($stmt, ITransformer $transformer): EditableNode;
+    public function transform($node, ITransformer $transformer): EditableNode;
 
-    public function supports(Stmt $stmt): bool;
+    public function supports(Node $node): bool;
 }
