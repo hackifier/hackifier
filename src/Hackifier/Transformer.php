@@ -13,8 +13,9 @@ declare(strict_types=1);
 
 namespace Hackifier;
 
-use Hackifier\Transformer\IStatementTransformer;
 use Facebook\HHAST\EditableList;
+use Facebook\HHAST\EditableNode;
+use Hackifier\Transformer\IStatementTransformer;
 use PhpParser\Node\Stmt;
 
 class Transformer implements ITransformer
@@ -43,17 +44,22 @@ class Transformer implements ITransformer
     public function transform(Stmt ...$stmts): EditableList
     {
         $nodes = [];
-        foreach ($stmts as $stmt) {
-            foreach($this->transformers as $transformer) {
-                if ($transformer->supports($stmt)) {
-                    $nodes[] = $transformer->transform($stmt, $this);
-                    break 2;
-                }
-            }
 
-            throw new Exception\UnsupportedStmtException($stmt);
+        foreach ($stmts as $stmt) {
+            $nodes[] = $this->transformStmt($stmt);
         }
 
         return new EditableList($nodes);
+    }
+
+    private function transformStmt(Stmt $stmt): EditableNode
+    {
+        foreach ($this->transformers as $transformer) {
+            if ($transformer->supports($stmt)) {
+                return $transformer->transform($stmt, $this);
+            }
+        }
+
+        throw new Exception\UnsupportedStmtException($stmt);
     }
 }
