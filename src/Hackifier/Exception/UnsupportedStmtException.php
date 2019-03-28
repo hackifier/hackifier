@@ -13,10 +13,10 @@ declare(strict_types=1);
 
 namespace Hackifier\Exception;
 
+use function get_class;
 use PhpParser\Node\Stmt;
 use RuntimeException;
 use function sprintf;
-use function get_class;
 
 class UnsupportedStmtException extends RuntimeException implements IException
 {
@@ -29,10 +29,11 @@ class UnsupportedStmtException extends RuntimeException implements IException
     {
         $this->stmt = $stmt;
         $message = $message ?? sprintf('Unsupported PHP-Parser statement %s', get_class($stmt));
-        parent::__construct($message);       
+        parent::__construct($message);
     }
 
-    public function getStatement(): Stmt {
+    public function getStatement(): Stmt
+    {
         return $this->stmt;
     }
 }

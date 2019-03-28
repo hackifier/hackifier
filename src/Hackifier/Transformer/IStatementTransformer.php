@@ -13,9 +13,9 @@ declare(strict_types=1);
 
 namespace Hackifier\Transformer;
 
+use Facebook\HHAST\EditableNode;
 use Hackifier\ITransformer;
 use PhpParser\Node\Stmt;
-use Facebook\HHAST\EditableNode;
 
 /**
  * @template T as \PhpParser\Node\Stmt

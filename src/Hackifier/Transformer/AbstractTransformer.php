@@ -15,7 +15,6 @@ namespace Hackifier\Transformer;
 
 use Facebook\HHAST\EditableList;
 use Facebook\HHAST\EditableNode;
-use HH\Lib\C;
 
 /**
  * @template T as \PhpParser\Node\Stmt
