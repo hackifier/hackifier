@@ -20,7 +20,7 @@ use Facebook\HHAST\EditableNode;
 /**
  * @template T as \PhpParser\Node\Stmt
  */
-interface IStatmentTransformer
+interface IStatementTransformer
 {
     /**
      * @param T $stmt

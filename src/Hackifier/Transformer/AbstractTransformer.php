@@ -19,9 +19,9 @@ use HH\Lib\C;
 
 /**
  * @template T as \PhpParser\Node\Stmt
- * @implements IStatmentTransformer<T>
+ * @implements IStatementTransformer<T>
  */
-abstract class AbstractTransformer implements IStatmentTransformer
+abstract class AbstractTransformer implements IStatementTransformer
 {
     final protected function list(EditableNode ...$nodes): EditableNode
     {

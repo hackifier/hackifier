@@ -13,29 +13,29 @@ declare(strict_types=1);
 
 namespace Hackifier;
 
-use Hackifier\Transformer\IStatmentTransformer;
+use Hackifier\Transformer\IStatementTransformer;
 use Facebook\HHAST\EditableList;
 use PhpParser\Node\Stmt;
 
 class Transformer implements ITransformer
 {
     /**
-     * @var array<int, IStatmentTransformer<Stmt>>
+     * @var array<int, IStatementTransformer<Stmt>>
      */
     private $transformers;
 
     /**
-     * @param array<int, IStatmentTransformer<Stmt>> $transformers
+     * @param array<int, IStatementTransformer<Stmt>> $transformers
      */
-    public function __construct(IStatmentTransformer ...$transformers)
+    public function __construct(IStatementTransformer ...$transformers)
     {
         $this->transformers = $transformers;
     }
 
     /**
-     * @param IStatmentTransformer<Stmt> $transformer
+     * @param IStatementTransformer<Stmt> $transformer
      */
-    public function addStatmentTransformer(IStatmentTransformer $transformer): void
+    public function addStatementTransformer(IStatementTransformer $transformer): void
     {
         $this->transformers[] = $transformer;
     }
