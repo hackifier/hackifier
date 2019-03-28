@@ -3,12 +3,12 @@
 declare(strict_types=1);
 
 /*
- *  Copyright (c) 2019-present, Saif Eddin Gmati.
+ * This file is part of the Hackifier package.
  *
- *  All rights reserved.
+ * (c) Saif Eddin Gmati <azjezz@protonmail.com>
  *
- *  This source code is licensed under the MIT license found in the
- *  LICENSE file in the root directory of this source tree.
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Hackifier\Transformer;
