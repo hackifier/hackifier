@@ -29,7 +29,7 @@ final class Parser implements IParser
     }
 
     /**
-     * @return \PhpParser\Node\Stmt[]
+     * @return \PhpParser\Node[]
      */
     public function parse(string $code): array
     {

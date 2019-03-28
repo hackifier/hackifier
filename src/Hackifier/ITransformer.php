@@ -14,9 +14,9 @@ declare(strict_types=1);
 namespace Hackifier;
 
 use Facebook\HHAST\EditableList;
-use PhpParser\Node\Stmt;
+use PhpParser\Node;
 
 interface ITransformer
 {
-    public function transform(Stmt ...$stmts): EditableList;
+    public function transform(Node ...$nodes): EditableList;
 }

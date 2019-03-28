@@ -14,26 +14,26 @@ declare(strict_types=1);
 namespace Hackifier\Exception;
 
 use function get_class;
-use PhpParser\Node\Stmt;
+use PhpParser\Node;
 use RuntimeException;
 use function sprintf;
 
-class UnsupportedStmtException extends RuntimeException implements IException
+class UnsupportedNodeException extends RuntimeException implements IException
 {
     /**
-     * @var Stmt
+     * @var Node
      */
-    private $stmt;
+    private $node;
 
-    public function __construct(Stmt $stmt, ?string $message = null)
+    public function __construct(Node $node, ?string $message = null)
     {
-        $this->stmt = $stmt;
-        $message = $message ?? sprintf('Unsupported PHP-Parser statement %s', get_class($stmt));
+        $this->node = $node;
+        $message = $message ?? sprintf('Unsupported PHP-Parser Node(%s).', get_class($node));
         parent::__construct($message);
     }
 
-    public function getStatement(): Stmt
+    public function getStatement(): Node
     {
-        return $this->stmt;
+        return $this->node;
     }
 }
