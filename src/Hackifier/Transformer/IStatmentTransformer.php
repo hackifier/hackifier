@@ -14,8 +14,8 @@ declare(strict_types=1);
 namespace Hackifier\Transformer;
 
 use Hackifier\ITransformer;
-use Facebook\HHAST\EditableList;
 use PhpParser\Node\Stmt;
+use Facebook\HHAST\EditableNode;
 
 /**
  * @template T as \PhpParser\Node\Stmt
@@ -25,7 +25,7 @@ interface IStatmentTransformer
     /**
      * @param T $stmt
      */
-    public function transform($stmt, EditableList $list, ITransformer $transformer): void;
+    public function transform($stmt, ITransformer $transformer): EditableNode;
 
     public function supports(Stmt $stmt): bool;
 }

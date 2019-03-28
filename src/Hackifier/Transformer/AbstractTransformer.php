@@ -23,17 +23,8 @@ use HH\Lib\C;
  */
 abstract class AbstractTransformer implements IStatmentTransformer
 {
-    /**
-     * Add a new node to the list.
-     */
-    protected function add(EditableList $list, EditableNode $node, bool $end = true): void
+    final protected function list(EditableNode ...$nodes): EditableNode
     {
-        if ($end) {
-            $last = C\lastx($list->getChildren());
-            $list->replace($last, EditableList::concat($last, $node));
-        } else {
-            $first = C\firstx($list->getChildren());
-            $list->replace($first, EditableList::concat($node, $first));
-        }
+        return EditableList::fromItems($nodes);
     }
 }
