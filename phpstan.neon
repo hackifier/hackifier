@@ -1,8 +1,0 @@
-parameters:
-    level: 7
-    fileExtensions:
-        - php
-    paths:
-        - src
-includes:
-	- vendor/phpstan/phpstan-strict-rules/rules.neon
