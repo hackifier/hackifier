@@ -24,7 +24,10 @@ interface INamespaceUseDeclaration
 
     public function hasKeyword(): bool;
 
-    public function getKeyword(): Token\UseToken;
+    /**
+     * @return Token\UseToken
+     */
+    public function getKeyword(): EditableNode;
 
     /**
      * @param EditableNode $value
@@ -35,7 +38,7 @@ interface INamespaceUseDeclaration
 
     public function hasKind(): bool;
 
-    public function getKind(): EditableToken;
+    public function getKind(): EditableNode;
 
     public function withClauses(EditableNode $value);
 
@@ -44,7 +47,10 @@ interface INamespaceUseDeclaration
     /**
      * @return EditableList<Syntax\NamespaceUseClause>
      */
-    public function getClauses(): EditableList;
+    public function getClauses(): EditableNode;
 
-    public function getSemicolon(): Token\SemicolonToken;
+    /**
+     * @return Token\SemiColonToken
+     */
+    public function getSemicolon(): EditableNode;
 }
