@@ -156,7 +156,7 @@ final class EditableList extends EditableNode
         $new_parents = $parents;
         $new_parents[] = $this;
 
-        /**
+        /*
          * @var EditableNode
          */
         foreach ($this->getChildren() as $child) {

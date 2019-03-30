@@ -1,5 +1,14 @@
 <?php declare(strict_types=1);
 
+$header = <<<CODE
+This file is part of the Hackifier package.
+
+(c) Saif Eddin Gmati <azjezz@protonmail.com>
+
+For the full copyright and license information, please view the LICENSE
+file that was distributed with this source code.
+CODE;
+
 return PhpCsFixer\Config::create()
     ->setRules([
         '@PSR1' => true,
@@ -9,7 +18,7 @@ return PhpCsFixer\Config::create()
         '@DoctrineAnnotation' => true,
         'declare_strict_types' => true,
         'strict_param' => true,
-        'strict_comparison' => false,
+        'strict_comparison' => true,
         'align_multiline_comment' => true,
         'array_syntax' => ['syntax' => 'short'],
         'binary_operator_spaces' => true,
@@ -72,7 +81,13 @@ return PhpCsFixer\Config::create()
         'encoding' => true,
         'full_opening_tag' => true,
         // 'mb_str_functions' => true,
-        'no_trailing_whitespace' => true
+        'no_trailing_whitespace' => true,
+        'header_comment' => [
+            'comment_type' => 'PHPDoc',
+            'header' => $header,
+            'location' => 'after_declare_strict',
+            'separate' => 'both'
+        ]
     ])
     ->setRiskyAllowed(true)
     ->setUsingCache(true)

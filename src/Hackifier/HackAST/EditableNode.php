@@ -265,7 +265,7 @@ abstract class EditableNode
      */
     public function getLastToken(): ?EditableToken
     {
-        /**
+        /*
          * @var EditableNode
          */
         foreach (\array_reverse($this->getChildren()) as $child) {
