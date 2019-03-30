@@ -17,10 +17,5 @@ interface ILoopStatement extends IControlFlowStatement
 {
     public function getBody(): EditableNode;
 
-    /**
-     * @param EditableNode $body
-     *
-     * @return self
-     */
     public function withBody(EditableNode $body);
 }
