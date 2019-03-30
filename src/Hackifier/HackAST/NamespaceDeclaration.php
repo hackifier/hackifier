@@ -25,10 +25,6 @@ final class NamespaceDeclaration extends NamespaceDeclarationGeneratedBase
             return $name->getText();
         }
 
-        if (null === $name) {
-            return '';
-        }
-
         return implode('\\', array_map(static function (Token\NameToken $token): string {
             return $token->getText();
         }, $this->getDescendantsOfType(Token\NameToken::class)));
