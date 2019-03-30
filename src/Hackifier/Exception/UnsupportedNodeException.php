@@ -28,8 +28,9 @@ class UnsupportedNodeException extends RuntimeException implements IException
     public function __construct(Node $node, ?string $message = null)
     {
         $this->node = $node;
-        $message = $message ?? sprintf('Unsupported PHP-Parser Node(%s).', get_class($node));
-        parent::__construct($message);
+        parent::__construct(
+            $message ?? sprintf('Unsupported PHP-Parser Node(%s).', get_class($node))
+        );
     }
 
     public function getStatement(): Node

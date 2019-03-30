@@ -1,9 +1,9 @@
 # editor config
 .vscode
+.idea/*
 
 # code coverage
 clover.xml
+
 # third-pary packages
 vendor
-# WIP HackAST nodes/tokens to replace the php version of hhast provided by hacktophp.
-src/Hackifier/HackAST/*

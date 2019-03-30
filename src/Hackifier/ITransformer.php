@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-/*
+/**
  * This file is part of the Hackifier package.
  *
  * (c) Saif Eddin Gmati <azjezz@protonmail.com>
@@ -13,10 +13,10 @@ declare(strict_types=1);
 
 namespace Hackifier;
 
-use Facebook\HHAST\EditableList;
+use Hackifier\HackAST\EditableNode;
 use PhpParser\Node;
 
 interface ITransformer
 {
-    public function transform(Node ...$nodes): EditableList;
+    public function transform(Node ...$nodes): EditableNode;
 }

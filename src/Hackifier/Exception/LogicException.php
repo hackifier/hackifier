@@ -11,14 +11,10 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 
-namespace Hackifier;
+namespace Hackifier\Exception;
 
-use Facebook\HHAST\EditableList;
+use LogicException as ParentException;
 
-class Compiler implements ICompiler
+class LogicException extends ParentException implements IException
 {
-    public function compile(EditableList $ast): string
-    {
-        return $ast->getCode();
-    }
 }

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-/*
+/**
  * This file is part of the Hackifier package.
  *
  * (c) Saif Eddin Gmati <azjezz@protonmail.com>
@@ -13,40 +13,38 @@ declare(strict_types=1);
 
 namespace Hackifier;
 
-use Facebook\HHAST\EditableList;
-use Facebook\HHAST\EditableNode;
+use Hackifier\HackAST\EditableList;
+use Hackifier\HackAST\EditableNode;
 use Hackifier\Transformer\INodeTransformer;
-use HH\Lib\Vec;
 use PhpParser\Node;
+use SplPriorityQueue;
 
 class Transformer implements ITransformer
 {
     /**
-     * @var array<int, INodeTransformer<Node>>
+     * @var SplPriorityQueue
      */
     private $transformers;
 
-    /**
-     * @param array<int, INodeTransformer<Node>> $transformers
-     */
-    public function __construct(INodeTransformer ...$transformers)
+    public function __construct()
     {
-        $this->transformers = $transformers;
+        $this->transformers = new SplPriorityQueue();
     }
 
     /**
      * @param INodeTransformer<Node> $transformer
+     * @param int                    $priority
      */
-    public function addNodeTransformer(INodeTransformer $transformer): void
+    public function addNodeTransformer(INodeTransformer $transformer, int $priority): void
     {
-        $this->transformers[] = $transformer;
+        $this->transformers->insert($transformer, $priority);
     }
 
-    public function transform(Node ...$nodes): EditableList
+    public function transform(Node ...$nodes): EditableNode
     {
-        $nodes = Vec\map($nodes, function (Node $node): EditableNode {
+        $nodes = array_map(function (Node $node): EditableNode {
             return $this->transformNode($node);
-        });
+        }, $nodes);
 
         return new EditableList($nodes);
     }

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-/*
+/**
  * This file is part of the Hackifier package.
  *
  * (c) Saif Eddin Gmati <azjezz@protonmail.com>
@@ -29,6 +29,8 @@ final class Parser implements IParser
     }
 
     /**
+     * @param string $code
+     *
      * @return \PhpParser\Node[]
      */
     public function parse(string $code): array

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-/*
+/**
  * This file is part of the Hackifier package.
  *
  * (c) Saif Eddin Gmati <azjezz@protonmail.com>
@@ -13,10 +13,10 @@ declare(strict_types=1);
 
 namespace Hackifier\Transformer;
 
-use Facebook\HHAST\DelimitedComment;
-use Facebook\HHAST\EditableList;
-use Facebook\HHAST\EditableNode;
-use Facebook\HHAST\SingleLineComment;
+use Hackifier\HackAST\EditableList;
+use Hackifier\HackAST\EditableNode;
+use Hackifier\HackAST\Trivia\DelimitedComment;
+use Hackifier\HackAST\Trivia\SingleLineComment;
 use PhpParser\Comment;
 use PhpParser\Node;
 

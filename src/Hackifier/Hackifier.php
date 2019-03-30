@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-/*
+/**
  * This file is part of the Hackifier package.
  *
  * (c) Saif Eddin Gmati <azjezz@protonmail.com>
@@ -13,10 +13,10 @@ declare(strict_types=1);
 
 namespace Hackifier;
 
-use Facebook\HHAST\EditableList;
+use Hackifier\HackAST\EditableNode;
 use PhpParser\Node;
 
-final class Hackifier implements IParser, ITransformer, ICompiler
+final class Hackifier implements IParser, ITransformer, IPrinter
 {
     /**
      * @var IParser
@@ -29,18 +29,18 @@ final class Hackifier implements IParser, ITransformer, ICompiler
     private $transformer;
 
     /**
-     * @var ICompiler
+     * @var IPrinter
      */
-    private $compiler;
+    private $printer;
 
     public function __construct(
         IParser $parser,
         ITransformer $transformer,
-        ICompiler $compiler
+        IPrinter $printer
     ) {
         $this->parser = $parser;
         $this->transformer = $transformer;
-        $this->compiler = $compiler;
+        $this->printer = $printer;
     }
 
     public function convert(string $php): string
@@ -48,24 +48,21 @@ final class Hackifier implements IParser, ITransformer, ICompiler
         $nodes = $this->parse($php);
         $ast = $this->transform(...$nodes);
 
-        return $this->compile($ast);
+        return $this->print($ast);
     }
 
-    /**
-     * @return Node[]
-     */
     public function parse(string $code): array
     {
         return $this->parser->parse($code);
     }
 
-    public function transform(Node ...$nodes): EditableList
+    public function transform(Node ...$nodes): EditableNode
     {
         return $this->transformer->transform(...$nodes);
     }
 
-    public function compile(EditableList $ast): string
+    public function print(EditableNode $ast): string
     {
-        return $this->compiler->compile($ast);
+        return $this->printer->print($ast);
     }
 }
