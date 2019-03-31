@@ -16,6 +16,7 @@ namespace Hackifier\Transformer;
 use Hackifier\HackAST\EditableList;
 use Hackifier\HackAST\EditableNode;
 use Hackifier\HackAST\Trivia\DelimitedComment;
+use Hackifier\HackAST\Trivia\EndOfLine;
 use Hackifier\HackAST\Trivia\SingleLineComment;
 use PhpParser\Comment;
 use PhpParser\Node;
@@ -42,6 +43,7 @@ abstract class AbstractTransformer implements INodeTransformer
             } else {
                 $nodes[] = new SingleLineComment($comment->getText());
             }
+            $nodes[] = new EndOfLine("\n");
         }
         $nodes[] = $node;
 
