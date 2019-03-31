@@ -73,7 +73,7 @@ abstract class AbstractTransformer implements INodeTransformer
             new IgnoreError(sprintf(
                 '/* HH_IGNORE_ERROR[%d]%s */',
                 $code,
-                null === $reason ? ' ' . $reason : ''
+                null !== $reason ? ' ' . $reason : ''
             )),
             $newline ? new EndOfLine("\n") : Missing(),
             $node
