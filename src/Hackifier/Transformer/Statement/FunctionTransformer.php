@@ -56,7 +56,7 @@ class FunctionTransformer extends AbstractTransformer
             $this->list(
                 new LeftBraceToken(new WhiteSpace(' '), new EndOfLine("\n")),
                 $transformer->transform(...$node->stmts),
-                new RightBraceToken(new EndOfLine("\n"), new EndOfLine("\n"))
+                new RightBraceToken(Missing(), new EndOfLine("\n"))
             )
         );
     }

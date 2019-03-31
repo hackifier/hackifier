@@ -26,15 +26,15 @@
     "autoload": {
         "psr-4": {
             "Hackifier\\": "src/Hackifier"
-        }
-    },
-    "autoload-dev": {
-        "psr-4": {
-            "Hackifier\\Test\\": "tests/"
         },
         "files": [
             "src/Hackifier/HackAST/Missing.php"
         ]
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Hackifier\\Test\\": "tests/"
+        }
     },
     "prefer-stable": true,
     "scripts": {
