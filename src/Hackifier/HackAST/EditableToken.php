@@ -155,11 +155,17 @@ abstract class EditableToken extends EditableNode
      */
     abstract public function withTrailing(EditableNode $trailing);
 
+    /**
+     * @return EditableToken
+     */
     final public function getFirstToken(): EditableToken
     {
         return $this;
     }
 
+    /**
+     * @return EditableToken
+     */
     final public function getLastToken(): EditableToken
     {
         return $this;

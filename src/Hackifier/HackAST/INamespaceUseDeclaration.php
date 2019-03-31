@@ -24,9 +24,6 @@ interface INamespaceUseDeclaration
 
     public function hasKeyword(): bool;
 
-    /**
-     * @return Token\UseToken
-     */
     public function getKeyword(): EditableNode;
 
     /**
@@ -44,13 +41,7 @@ interface INamespaceUseDeclaration
 
     public function hasClauses(): bool;
 
-    /**
-     * @return EditableList<Syntax\NamespaceUseClause>
-     */
     public function getClauses(): EditableNode;
 
-    /**
-     * @return Token\SemiColonToken
-     */
     public function getSemicolon(): EditableNode;
 }

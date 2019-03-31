@@ -22,12 +22,7 @@ final class AlternateLoopStatement extends AlternateLoopStatementGeneratedBase
         return $this->getStatements();
     }
 
-    /**
-     * @param EditableNode $body
-     *
-     * @return static
-     */
-    public function withBody(EditableNode $body)
+    public function withBody(EditableNode $body): AlternateLoopStatementGeneratedBase
     {
         return $this->withStatements($body);
     }

@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace Hackifier\HackAST;
 
+use function array_filter;
 use Closure;
 use Hackifier\Exception\LogicException;
 
@@ -23,6 +24,9 @@ abstract class EditableNode
      */
     protected $_width;
 
+    /**
+     * @var string
+     */
     private $_syntax_kind;
 
     public function __construct(string $syntax_kind)
@@ -52,7 +56,7 @@ abstract class EditableNode
      */
     public function getChildrenWhere(Closure $filter): array
     {
-        return \array_filter($this->getChildren(), $filter);
+        return array_filter($this->getChildren(), $filter);
     }
 
     /**
@@ -230,21 +234,21 @@ abstract class EditableNode
      */
     public function removeWhere(Closure $predicate): self
     {
-        return $this->rewrite(static function ($node, $parents) use ($predicate) {
+        return $this->rewrite(static function (EditableNode $node, array $parents) use ($predicate): EditableNode {
             return $predicate($node, $parents) ? Missing::getInstance() : $node;
         });
     }
 
     public function without(EditableNode $target): self
     {
-        return $this->removeWhere(static function ($node, $_) use ($target) {
+        return $this->removeWhere(static function (EditableNode $node, array $_) use ($target): bool {
             return $node === $target;
         });
     }
 
     public function replace(EditableNode $target, EditableNode $new_node): self
     {
-        return $this->rewriteDescendants(static function ($node, $_) use ($target, $new_node) {
+        return $this->rewriteDescendants(static function (EditableNode $node, array $_) use ($target, $new_node): EditableNode {
             return $node === $target ? $new_node : $node;
         });
     }

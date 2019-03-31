@@ -13,18 +13,21 @@ declare(strict_types=1);
 
 namespace Hackifier\HackAST;
 
+use function array_merge;
+use function count;
+
 /**
  * @template Titem as null|EditableNode
  */
 final class EditableList extends EditableNode
 {
     /**
-     * @var array<int, EditableNode>
+     * @var array<int, Titem>
      */
     private $_children;
 
     /**
-     * @var array<int, EditableNode>
+     * @var array<int, Titem>
      */
     public function __construct(array $children)
     {
@@ -68,7 +71,7 @@ final class EditableList extends EditableNode
         // `list($a,,$c) = $foo` and types like `\Foo\Bar`, now that the first
         // is parsed as name token items with  backslash separators - i.e. the first
         // item is empty.
-        return \array_map(static function ($child) {
+        return \array_map(static function (EditableNode $child): EditableNode {
             return $child instanceof Syntax\ListItem ? $child->getItem() : $child;
         }, $this->_children);
     }
@@ -94,9 +97,11 @@ final class EditableList extends EditableNode
     }
 
     /**
-     * @param array<int, EditableNode> $items
+     * @template T as EditableNode|null
      *
-     * @return EditableNode
+     * @param array<int, T> $items
+     *
+     * @return EditableList<T>|Missing
      */
     public static function fromItems(array $items): EditableNode
     {
@@ -104,13 +109,15 @@ final class EditableList extends EditableNode
     }
 
     /**
-     * @param array<int, EditableNode> $items
+     * @template T as EditableNode|null
      *
-     * @return EditableNode
+     * @param array<int, T> $items
+     *
+     * @return EditableList<T>|Missing
      */
     public static function createNonEmptyListOrMissing(array $items): EditableNode
     {
-        if (0 === \count($items)) {
+        if (0 === count($items)) {
             return Missing();
         }
 
@@ -139,7 +146,7 @@ final class EditableList extends EditableNode
             return $left;
         }
 
-        return new EditableList(\array_merge($right->toVec(), $left->toVec()));
+        return new EditableList(array_merge($right->toVec(), $left->toVec()));
     }
 
     /**
@@ -156,7 +163,7 @@ final class EditableList extends EditableNode
         $new_parents = $parents;
         $new_parents[] = $this;
 
-        /*
+        /**
          * @var EditableNode
          */
         foreach ($this->getChildren() as $child) {
@@ -166,7 +173,7 @@ final class EditableList extends EditableNode
                 $dirty = true;
             }
 
-            if (null !== $new_child && !$new_child->isMissing()) {
+            if (!$new_child->isMissing()) {
                 if ($new_child->isList()) {
                     foreach ($new_child->getChildren() as $n) {
                         $new_children[] = $n;

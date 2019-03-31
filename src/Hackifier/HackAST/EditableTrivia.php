@@ -15,6 +15,9 @@ namespace Hackifier\HackAST;
 
 abstract class EditableTrivia extends EditableNode
 {
+    /**
+     * @var string
+     */
     private $_text;
 
     public function __construct(string $trivia_kind, string $text)
