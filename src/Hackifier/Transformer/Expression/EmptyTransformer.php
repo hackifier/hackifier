@@ -36,12 +36,12 @@ class EmptyTransformer extends AbstractTransformer
      */
     public function transform($node, ITransformer $transformer): EditableNode
     {
-        return $this->comments($node, new EmptyExpression(
+        return $this->fixMe($this->comments($node, new EmptyExpression(
             new EmptyToken(Missing(), Missing()),
             new LeftParenToken(Missing(), Missing()),
             $transformer->transform($node->expr),
             new RightParenToken(Missing(), Missing())
-        ));
+        )), 4016, 'empty cannot be used in a completely type safe way and so is banned in strict mode', true);
     }
 
     public function supports(Node $node): bool
