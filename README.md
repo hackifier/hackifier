@@ -3,6 +3,7 @@ A proof-of-concept PHP to Hack transpiler written in PHP
 
 ## Example
 
+`hackifier.php` : 
 
 ```php
 <?php declare(strict_types=1);
@@ -64,4 +65,38 @@ function foo(string \$foo, int \$bar = 0, \$baz = null) {
 CODE;
 
 echo $hackifier->convert($php);
+```
+
+Run the following in your console :
+
+```console
+$ touch sample.hack
+$ php hackifier.php >> sample.hack
+$ hackfmt -i sample.hack
+$ hh_client sample.hack
+No errors!
+```
+
+`sample.hack` :
+
+```hack
+/**
+ * dummy sample
+ */
+function foo(string $foo, int $bar = 0, mixed $baz = null): mixed {
+  // qux
+  if ($foo === 'baz') {
+    return str_replace(' ', '', ucwords(str_replace('_', ' ', $foo)));
+  } elseif (
+    /* HH_FIXME[4016] empty cannot be used in a completely type safe way and so is banned in strict mode */
+    empty($foo)
+  ) {
+    return;
+  } else {
+    // foo
+    return
+      /* HH_FIXME[4016] empty cannot be used in a completely type safe way and so is banned in strict mode */
+      empty($baz) ? $bar : $baz;
+  }
+}
 ```
