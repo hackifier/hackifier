@@ -40,10 +40,10 @@ abstract class AbstractTransformer implements INodeTransformer
         foreach ($comments as $comment) {
             if ($comment instanceof Comment\Doc) {
                 $nodes[] = new DelimitedComment($comment->getText());
+                $nodes[] = new EndOfLine("\n");
             } else {
                 $nodes[] = new SingleLineComment($comment->getText());
             }
-            $nodes[] = new EndOfLine("\n");
         }
         $nodes[] = $node;
 
