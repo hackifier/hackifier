@@ -14,7 +14,7 @@ declare(strict_types=1);
 namespace Hackifier\Transformer\Scalar;
 
 use Hackifier\HackAST\EditableNode;
-use Hackifier\HackAST\Missing;
+use function Hackifier\HackAST\Missing;
 use Hackifier\HackAST\Token\DecimalLiteralToken;
 use Hackifier\ITransformer;
 use Hackifier\Transformer\AbstractTransformer;
@@ -34,7 +34,7 @@ class LiteralNumberTransformer extends AbstractTransformer
     public function transform($node, ITransformer $transformer): EditableNode
     {
         return $this->comments($node, new DecimalLiteralToken(
-            Missing::getInstance(), Missing::getInstance(), (string) $node->value
+            Missing(), Missing(), (string) $node->value
         ));
     }
 

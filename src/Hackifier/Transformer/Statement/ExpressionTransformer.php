@@ -11,7 +11,6 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 
-
 namespace Hackifier\Transformer\Statement;
 
 use Hackifier\HackAST\EditableNode;
@@ -29,7 +28,7 @@ class ExpressionTransformer extends AbstractTransformer
 {
     /**
      * @param Node\Stmt\Expression $node
-     * @param ITransformer $transformer
+     * @param ITransformer         $transformer
      *
      * @return EditableNode
      */

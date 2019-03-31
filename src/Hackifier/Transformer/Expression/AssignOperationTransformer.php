@@ -41,7 +41,7 @@ class AssignOperationTransformer extends AbstractTransformer
 {
     /**
      * @param Node\Expr\AssignOp $node
-     * @param ITransformer $transformer
+     * @param ITransformer       $transformer
      *
      * @return EditableNode
      */
@@ -60,21 +60,22 @@ class AssignOperationTransformer extends AbstractTransformer
             'Expr_AssignOp_Plus' => PlusEqualToken::class,
             'Expr_AssignOp_BitwiseOr' => BarEqualToken::class,
             'Expr_AssignOp_BitwiseAnd' => AmpersandEqualToken::class,
-            'Expr_AssignOp_Pow' => StarStarEqualToken::class
+            'Expr_AssignOp_Pow' => StarStarEqualToken::class,
         ];
 
         $operation = $operations[$node->getType()] ?? null;
+
         if (null === $operation) {
             throw new RuntimeException(sprintf('Unsupported assign operation (%s).', $node->getType()));
         }
 
         $operation = new $operation(new WhiteSpace(' '), new WhiteSpace(' '));
 
-        return new BinaryExpression(
+        return $this->comments($node, new BinaryExpression(
             $transformer->transform($node->var),
             $operation,
             $transformer->transform($node->expr)
-        );
+        ));
     }
 
     public function supports(Node $node): bool

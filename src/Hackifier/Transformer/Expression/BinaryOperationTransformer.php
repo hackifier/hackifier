@@ -98,11 +98,11 @@ class BinaryOperationTransformer extends AbstractTransformer
 
         $operation = new $operation(new WhiteSpace(' '), new WhiteSpace(' '));
 
-        return new BinaryExpression(
+        return $this->comments($node, new BinaryExpression(
             $transformer->transform($node->left),
             $operation,
             $transformer->transform($node->right)
-        );
+        ));
     }
 
     public function supports(Node $node): bool

@@ -18,6 +18,7 @@ use function Hackifier\HackAST\Missing;
 use Hackifier\HackAST\Syntax\ReturnStatement;
 use Hackifier\HackAST\Token\ReturnToken;
 use Hackifier\HackAST\Token\SemicolonToken;
+use Hackifier\HackAST\Trivia\EndOfLine;
 use Hackifier\HackAST\Trivia\WhiteSpace;
 use Hackifier\ITransformer;
 use Hackifier\Transformer\AbstractTransformer;
@@ -42,11 +43,11 @@ class ReturnTransformer extends AbstractTransformer
             $expression = $transformer->transform($node->expr);
         }
 
-        return new ReturnStatement(
+        return $this->comments($node, new ReturnStatement(
             new ReturnToken(Missing(), new WhiteSpace(' ')),
             $expression,
-            new SemicolonToken(Missing(), Missing())
-        );
+            new SemicolonToken(Missing(), new EndOfLine("\n"))
+        ));
     }
 
     public function supports(Node $node): bool
