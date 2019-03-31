@@ -35,7 +35,7 @@ class Transformer implements ITransformer
      * @param INodeTransformer<Node> $transformer
      * @param int                    $priority
      */
-    public function addNodeTransformer(INodeTransformer $transformer, int $priority): void
+    public function addNodeTransformer(INodeTransformer $transformer, int $priority = 0): void
     {
         $this->transformers->insert($transformer, $priority);
     }
@@ -51,7 +51,9 @@ class Transformer implements ITransformer
 
     private function transformNode(Node $node): EditableNode
     {
-        foreach ($this->transformers as $transformer) {
+        $transformers = clone $this->transformers;
+
+        foreach ($transformers as $transformer) {
             if ($transformer->supports($node)) {
                 return $transformer->transform($node, $this);
             }
