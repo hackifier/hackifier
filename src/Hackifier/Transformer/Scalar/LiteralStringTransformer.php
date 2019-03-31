@@ -15,8 +15,6 @@ namespace Hackifier\Transformer\Scalar;
 
 use Hackifier\HackAST\EditableNode;
 use function Hackifier\HackAST\Missing;
-use Hackifier\HackAST\Token\DoubleQuotedStringLiteralHeadToken;
-use Hackifier\HackAST\Token\DoubleQuotedStringLiteralTailToken;
 use Hackifier\HackAST\Token\SingleQuotedStringLiteralToken;
 use Hackifier\ITransformer;
 use Hackifier\Transformer\AbstractTransformer;
