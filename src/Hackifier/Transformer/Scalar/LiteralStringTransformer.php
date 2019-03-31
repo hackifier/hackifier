@@ -36,9 +36,7 @@ class LiteralStringTransformer extends AbstractTransformer
     public function transform($node, ITransformer $transformer): EditableNode
     {
         return $this->comments($node, new SingleQuotedStringLiteralToken(
-            new DoubleQuotedStringLiteralHeadToken(Missing(), Missing(), '\''),
-            new DoubleQuotedStringLiteralTailToken(Missing(), Missing(), '\''),
-            $node->value
+            Missing(), Missing(), sprintf('\'%s\'', $node->value)
         ));
     }
 
