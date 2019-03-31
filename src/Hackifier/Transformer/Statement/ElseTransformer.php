@@ -18,7 +18,6 @@ use function Hackifier\HackAST\Missing;
 use Hackifier\HackAST\Syntax\ElseClause;
 use Hackifier\HackAST\Token\ElseToken;
 use Hackifier\HackAST\Token\LeftBraceToken;
-use Hackifier\HackAST\Token\LeftBracketToken;
 use Hackifier\HackAST\Token\RightBraceToken;
 use Hackifier\HackAST\Trivia\EndOfLine;
 use Hackifier\HackAST\Trivia\WhiteSpace;

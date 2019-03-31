@@ -18,7 +18,6 @@ use function Hackifier\HackAST\Missing;
 use Hackifier\HackAST\Syntax\IfStatement;
 use Hackifier\HackAST\Token\IfToken;
 use Hackifier\HackAST\Token\LeftBraceToken;
-use Hackifier\HackAST\Token\LeftBracketToken;
 use Hackifier\HackAST\Token\LeftParenToken;
 use Hackifier\HackAST\Token\RightBraceToken;
 use Hackifier\HackAST\Token\RightParenToken;

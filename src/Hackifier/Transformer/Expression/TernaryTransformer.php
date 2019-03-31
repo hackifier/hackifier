@@ -11,9 +11,7 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 
-
 namespace Hackifier\Transformer\Expression;
-
 
 use Hackifier\HackAST\EditableNode;
 use Hackifier\HackAST\Syntax\BinaryExpression;
@@ -30,10 +28,9 @@ use PhpParser\Node;
  */
 class TernaryTransformer extends AbstractTransformer
 {
-
     /**
      * @param Node\Expr\Ternary $node
-     * @param ITransformer $transformer
+     * @param ITransformer      $transformer
      *
      * @return EditableNode
      */
@@ -51,6 +48,7 @@ class TernaryTransformer extends AbstractTransformer
         }
 
         $if = $transformer->transform($node->if);
+
         return $this->comments($node, new BinaryExpression(
            $condition,
            new QuestionToken(new WhiteSpace(' '), new WhiteSpace(' ')),

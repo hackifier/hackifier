@@ -11,9 +11,7 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 
-
 namespace Hackifier\Transformer\Expression;
-
 
 use Hackifier\HackAST\EditableNode;
 use function Hackifier\HackAST\Missing;
@@ -30,10 +28,9 @@ use PhpParser\Node;
  */
 class EmptyTransformer extends AbstractTransformer
 {
-
     /**
      * @param Node\Expr\Empty_ $node
-     * @param ITransformer $transformer
+     * @param ITransformer     $transformer
      *
      * @return EditableNode
      */
