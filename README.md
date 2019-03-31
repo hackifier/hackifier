@@ -17,27 +17,28 @@ $printer = new Hackifier\Printer();
 $transformer = new Hackifier\Transformer();
 $hackifier = new Hackifier\Hackifier($parser, $transformer, $printer);
 
-$transformer->addNodeTransformer(new Transformer\IdentifierTransformer());
-$transformer->addNodeTransformer(new Transformer\NameTransformer());
-$transformer->addNodeTransformer(new Transformer\ParamTransformer());
-$transformer->addNodeTransformer(new Transformer\ArgumentTransformer());
-$transformer->addNodeTransformer(new Transformer\Scalar\LiteralNumberTransformer());
-$transformer->addNodeTransformer(new Transformer\Scalar\LiteralStringTransformer());
-$transformer->addNodeTransformer(new Transformer\Expression\BinaryOperationTransformer());
-$transformer->addNodeTransformer(new Transformer\Expression\AssignOperationTransformer());
-$transformer->addNodeTransformer(new Transformer\Expression\VariableTransformer());
-$transformer->addNodeTransformer(new Transformer\Expression\FunctionCallTransformer());
-$transformer->addNodeTransformer(new Transformer\Expression\ConstantFetchTransformer());
-$transformer->addNodeTransformer(new Transformer\Statement\ExpressionTransformer());
-$transformer->addNodeTransformer(new Transformer\Statement\ExpressionTransformer());
-$transformer->addNodeTransformer(new Transformer\Statement\DeclareTransformer());
-$transformer->addNodeTransformer(new Transformer\Statement\FunctionTransformer());
-$transformer->addNodeTransformer(new Transformer\Statement\ReturnTransformer());
-$transformer->addNodeTransformer(new Transformer\Statement\IfTransformer());
-$transformer->addNodeTransformer(new Transformer\Statement\ElseIfTransformer());
-$transformer->addNodeTransformer(new Transformer\Statement\ElseTransformer());
-$transformer->addNodeTransformer(new Transformer\Expression\EmptyTransformer());
-$transformer->addNodeTransformer(new Transformer\Expression\TernaryTransformer());
+$transformer->addNodeTransformer(new Transformer\IdentifierTransformer())
+    ->addNodeTransformer(new Transformer\NameTransformer())
+    ->addNodeTransformer(new Transformer\ParamTransformer())
+    ->addNodeTransformer(new Transformer\ArgumentTransformer())
+    ->addNodeTransformer(new Transformer\Scalar\LiteralNumberTransformer())
+    ->addNodeTransformer(new Transformer\Scalar\LiteralStringTransformer())
+    ->addNodeTransformer(new Transformer\Expression\BinaryOperationTransformer())
+    ->addNodeTransformer(new Transformer\Expression\AssignOperationTransformer())
+    ->addNodeTransformer(new Transformer\Expression\VariableTransformer())
+    ->addNodeTransformer(new Transformer\Expression\FunctionCallTransformer())
+    ->addNodeTransformer(new Transformer\Expression\ConstantFetchTransformer())
+    ->addNodeTransformer(new Transformer\Statement\ExpressionTransformer())
+    ->addNodeTransformer(new Transformer\Statement\ExpressionTransformer())
+    ->addNodeTransformer(new Transformer\Statement\DeclareTransformer())
+    ->addNodeTransformer(new Transformer\Statement\FunctionTransformer())
+    ->addNodeTransformer(new Transformer\Statement\ReturnTransformer())
+    ->addNodeTransformer(new Transformer\Statement\IfTransformer())
+    ->addNodeTransformer(new Transformer\Statement\ElseIfTransformer())
+    ->addNodeTransformer(new Transformer\Statement\ElseTransformer())
+    ->addNodeTransformer(new Transformer\Expression\EmptyTransformer())
+    ->addNodeTransformer(new Transformer\Expression\TernaryTransformer())
+    ->addNodeTransformer(new Transformer\Scalar\MagicConstantTransformer());
 
 $php = <<<CODE
 <?php declare(strict_types=1);
