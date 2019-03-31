@@ -25,10 +25,13 @@ $transformer->addNodeTransformer(new Transformer\IdentifierTransformer());
 $transformer->addNodeTransformer(new Transformer\ParamTransformer());
 $transformer->addNodeTransformer(new Transformer\Scalar\LiteralNumberTransformer());
 $transformer->addNodeTransformer(new Transformer\Expression\BinaryOperationTransformer());
+$transformer->addNodeTransformer(new Transformer\Expression\AssignOperationTransformer());
 $transformer->addNodeTransformer(new Transformer\Expression\VariableTransformer());
-$transformer->addNodeTransformer(new Transformer\Statement\ReturnTransformer());
+$transformer->addNodeTransformer(new Transformer\Statement\ExpressionTransformer());
+$transformer->addNodeTransformer(new Transformer\Statement\ExpressionTransformer());
 $transformer->addNodeTransformer(new Transformer\Statement\DeclareTransformer());
 $transformer->addNodeTransformer(new Transformer\Statement\FunctionTransformer());
+$transformer->addNodeTransformer(new Transformer\Statement\ReturnTransformer());
 
 $php = <<<CODE
 <?php 
