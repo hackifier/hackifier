@@ -8,19 +8,14 @@ A proof-of-concept PHP to Hack transpiler written in PHP
 ```php
 <?php declare(strict_types=1);
 
-use Hackifier\{
-    Parser,
-    Transformer,
-    Printer,
-    Hackifier,
-};
+use Hackifier\Transformer;
 
 require __DIR__ . '/vendor/autoload.php';
 
-$parser = new Parser();
-$transformer = new Transformer();
-$printer = new Printer();
-$hackifier = new Hackifier($parser, $transformer, $printer);
+$parser = new Hackifier\Parser();
+$printer = new Hackifier\Printer();
+$transformer = new Hackifier\Transformer();
+$hackifier = new Hackifier\Hackifier($parser, $transformer, $printer);
 
 $transformer->addNodeTransformer(new Transformer\IdentifierTransformer());
 $transformer->addNodeTransformer(new Transformer\NameTransformer());
@@ -52,7 +47,7 @@ $php = <<<CODE
  */
 function foo(string \$foo, int \$bar = 0, \$baz = null) {
     // qux
-    if (\$foo === 'baz') {
+    if (strpos(\$foo, 'qux') !== false || \$baz === 'baz') {
         return str_replace(' ', '', ucwords(str_replace('_', ' ', \$foo)));
     } elseif (empty(\$foo)) {
         return;
@@ -85,7 +80,7 @@ No errors!
  */
 function foo(string $foo, int $bar = 0, mixed $baz = null): mixed {
   // qux
-  if ($foo === 'baz') {
+  if (strpos($foo, 'qux') !== false || $baz === 'baz') {
     return str_replace(' ', '', ucwords(str_replace('_', ' ', $foo)));
   } elseif (
     /* HH_FIXME[4016] empty cannot be used in a completely type safe way and so is banned in strict mode */
@@ -99,4 +94,5 @@ function foo(string $foo, int $bar = 0, mixed $baz = null): mixed {
       empty($baz) ? $bar : $baz;
   }
 }
+
 ```
