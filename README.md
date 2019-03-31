@@ -31,22 +31,36 @@ $transformer->addNodeTransformer(new Transformer\Expression\BinaryOperationTrans
 $transformer->addNodeTransformer(new Transformer\Expression\AssignOperationTransformer());
 $transformer->addNodeTransformer(new Transformer\Expression\VariableTransformer());
 $transformer->addNodeTransformer(new Transformer\Expression\FunctionCallTransformer());
+$transformer->addNodeTransformer(new Transformer\Expression\ConstantFetchTransformer());
 $transformer->addNodeTransformer(new Transformer\Statement\ExpressionTransformer());
 $transformer->addNodeTransformer(new Transformer\Statement\ExpressionTransformer());
 $transformer->addNodeTransformer(new Transformer\Statement\DeclareTransformer());
 $transformer->addNodeTransformer(new Transformer\Statement\FunctionTransformer());
 $transformer->addNodeTransformer(new Transformer\Statement\ReturnTransformer());
+$transformer->addNodeTransformer(new Transformer\Statement\IfTransformer());
+$transformer->addNodeTransformer(new Transformer\Statement\ElseIfTransformer());
+$transformer->addNodeTransformer(new Transformer\Statement\ElseTransformer());
+$transformer->addNodeTransformer(new Transformer\Expression\EmptyTransformer());
+$transformer->addNodeTransformer(new Transformer\Expression\TernaryTransformer());
 
 $php = <<<CODE
-<?php 
-declare(strict_types=1);
+<?php declare(strict_types=1);
 
 /**
- * increase a number by \$x.
+ * dummy sample
  */
-function inc(int \$a, int \$x = 1): int {
-  return \$a + \$x;
+function foo(string \$foo, int \$bar = 0, \$baz = null) {
+    // qux
+    if (\$foo === 'baz') {
+        return str_replace(' ', '', ucwords(str_replace('_', ' ', \$foo)));
+    } elseif (empty(\$foo)) {
+        return;
+    } else {
+        // foo
+        return empty(\$baz) ? \$bar : \$baz;
+    }
 }
+
 CODE;
 
 echo $hackifier->convert($php);
