@@ -24,11 +24,11 @@ $hackifier = new Hackifier($parser, $transformer, $printer);
 $transformer->addNodeTransformer(new Transformer\IdentifierTransformer());
 $transformer->addNodeTransformer(new Transformer\ParamTransformer());
 $transformer->addNodeTransformer(new Transformer\Scalar\LiteralNumberTransformer());
-$transformer->addNodeTransformer(new Transformer\Expr\BinaryOperationTransformer());
-$transformer->addNodeTransformer(new Transformer\Expr\VariableTransformer());
-$transformer->addNodeTransformer(new Transformer\Stmt\ReturnTransformer());
-$transformer->addNodeTransformer(new Transformer\Stmt\DeclareTransformer());
-$transformer->addNodeTransformer(new Transformer\Stmt\FunctionTransformer());
+$transformer->addNodeTransformer(new Transformer\Expression\BinaryOperationTransformer());
+$transformer->addNodeTransformer(new Transformer\Expression\VariableTransformer());
+$transformer->addNodeTransformer(new Transformer\Statement\ReturnTransformer());
+$transformer->addNodeTransformer(new Transformer\Statement\DeclareTransformer());
+$transformer->addNodeTransformer(new Transformer\Statement\FunctionTransformer());
 
 $php = <<<CODE
 <?php 
