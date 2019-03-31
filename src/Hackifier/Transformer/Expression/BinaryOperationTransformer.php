@@ -62,38 +62,38 @@ class BinaryOperationTransformer extends AbstractTransformer
     public function transform($node, ITransformer $transformer): EditableNode
     {
         $operations = [
-            '==' => EqualEqualToken::class,
-            '===' => EqualEqualEqualToken::class,
-            '*' => StarToken::class,
-            '**' => StarStarToken::class,
-            '|' => BarToken::class,
-            '||' => BarBarToken::class,
-            '^' => CaratToken::class,
-            '.' => DotToken::class,
-            '/' => SlashToken::class,
-            'xor' => XorToken::class,
-            'and' => AndToken::class,
-            'or' => OrToken::class,
-            '+' => PlusToken::class,
-            '-' => MinusToken::class,
-            '>' => GreaterThanToken::class,
-            '>=' => GreaterThanEqualToken::class,
-            '<' => LessThanToken::class,
-            '<=' => LessThanEqualToken::class,
-            '!==' => ExclamationEqualEqualToken::class,
-            '!=' => ExclamationEqualToken::class,
-            '??' => QuestionQuestionToken::class,
-            '>>' => GreaterThanGreaterThanToken::class,
-            '<<' => LessThanLessThanToken::class,
-            '%' => PercentToken::class,
-            '<=>' => LessThanEqualGreaterThanToken::class,
-            '&' => AmpersandToken::class,
-            '&&' => AmpersandAmpersandToken::class,
+            'Expr_BinaryOp_Equal' => EqualEqualToken::class,
+            'Expr_BinaryOp_Identical' => EqualEqualEqualToken::class,
+            'Expr_BinaryOp_Mul' => StarToken::class,
+            'Expr_BinaryOp_Pow' => StarStarToken::class,
+            'Expr_BinaryOp_BitwiseOr' => BarToken::class,
+            'Expr_BinaryOp_BooleanOr' => BarBarToken::class,
+            'Expr_BinaryOp_BitwiseXor' => CaratToken::class,
+            'Expr_BinaryOp_Concat' => DotToken::class,
+            'Expr_BinaryOp_Div' => SlashToken::class,
+            'Expr_BinaryOp_LogicalXor' => XorToken::class,
+            'Expr_BinaryOp_LogicalAnd' => AndToken::class,
+            'Expr_BinaryOp_LogicalOr' => OrToken::class,
+            'Expr_BinaryOp_Plus' => PlusToken::class,
+            'Expr_BinaryOp_Minus' => MinusToken::class,
+            'Expr_BinaryOp_Greater' => GreaterThanToken::class,
+            'Expr_BinaryOp_GreaterOrEqual' => GreaterThanEqualToken::class,
+            'Expr_BinaryOp_Smaller' => LessThanToken::class,
+            'Expr_BinaryOp_SmallerOrEqual' => LessThanEqualToken::class,
+            'Expr_BinaryOp_NotIdentical' => ExclamationEqualEqualToken::class,
+            'Expr_BinaryOp_NotEqual' => ExclamationEqualToken::class,
+            'Expr_BinaryOp_Coalesce' => QuestionQuestionToken::class,
+            'Expr_BinaryOp_ShiftRight' => GreaterThanGreaterThanToken::class,
+            'Expr_BinaryOp_ShiftLeft' => LessThanLessThanToken::class,
+            'Expr_BinaryOp_Mod' => PercentToken::class,
+            'Expr_BinaryOp_Spaceship' => LessThanEqualGreaterThanToken::class,
+            'Expr_BinaryOp_BitwiseAnd' => AmpersandToken::class,
+            'Expr_BinaryOp_BooleanAnd' => AmpersandAmpersandToken::class,
         ];
-        $operation = $operations[$node->getOperatorSigil()] ?? null;
+        $operation = $operations[$node->getType()] ?? null;
 
         if (null === $operation) {
-            throw new RuntimeException(sprintf('Unsupported binary operation (%s).', $node->getOperatorSigil()));
+            throw new RuntimeException(sprintf('Unsupported binary operation (%s).', $node->getType()));
         }
 
         $operation = new $operation(new WhiteSpace(' '), new WhiteSpace(' '));
