@@ -15,9 +15,13 @@ namespace Hackifier\Transformer;
 
 use Hackifier\HackAST\EditableList;
 use Hackifier\HackAST\EditableNode;
+use function Hackifier\HackAST\Missing;
 use Hackifier\HackAST\Trivia\DelimitedComment;
 use Hackifier\HackAST\Trivia\EndOfLine;
+use Hackifier\HackAST\Trivia\FixMe;
+use Hackifier\HackAST\Trivia\IgnoreError;
 use Hackifier\HackAST\Trivia\SingleLineComment;
+use Hackifier\HackAST\Trivia\Unsafe;
 use PhpParser\Comment;
 use PhpParser\Node;
 
@@ -48,5 +52,40 @@ abstract class AbstractTransformer implements INodeTransformer
         $nodes[] = $node;
 
         return $this->list(...$nodes);
+    }
+
+    final protected function fixMe(EditableNode $node, int $code, ?string $reason = null, bool $newline = false): EditableNode
+    {
+        return $this->list(
+            new FixMe(sprintf(
+                '/* HH_FIXME[%d]%s */',
+                $code,
+                null !== $reason ? ' ' . $reason : ''
+            )),
+            $newline ? new EndOfLine("\n") : Missing(),
+            $node
+        );
+    }
+
+    final protected function ignoreError(EditableNode $node, int $code, ?string $reason = null, bool $newline = false): EditableNode
+    {
+        return $this->list(
+            new IgnoreError(sprintf(
+                '/* HH_IGNORE_ERROR[%d]%s */',
+                $code,
+                null === $reason ? ' ' . $reason : ''
+            )),
+            $newline ? new EndOfLine("\n") : Missing(),
+            $node
+        );
+    }
+
+    final protected function unsafe(EditableNode $node): EditableNode
+    {
+        return $this->list(
+            new Unsafe('// UNSAFE'),
+            new EndOfLine("\n"),
+            $node
+        );
     }
 }
