@@ -40,11 +40,14 @@ class ReturnTransformer extends AbstractTransformer
         if (null === $node->expr) {
             $expression = Missing();
         } else {
-            $expression = $transformer->transform($node->expr);
+            $expression = $this->list(
+                new WhiteSpace(' '),
+                $transformer->transform($node->expr)
+            );
         }
 
         return $this->comments($node, new ReturnStatement(
-            new ReturnToken(Missing(), new WhiteSpace(' ')),
+            new ReturnToken(Missing(), Missing()),
             $expression,
             new SemicolonToken(Missing(), new EndOfLine("\n"))
         ));
