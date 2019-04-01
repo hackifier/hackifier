@@ -95,9 +95,7 @@ $ php hackifier.php
 ```hack
 /**
  * @param string $str
- *
  * @param null|string|int $other
- *
  * @return string
  */
 function concat(string $str, ?arraykey $other): string {
@@ -107,7 +105,6 @@ function concat(string $str, ?arraykey $other): string {
 /**
  * @param int|float $a
  * @param int|float $b
- *
  * @return float
  */
 function add(num $a, num $b): num {
