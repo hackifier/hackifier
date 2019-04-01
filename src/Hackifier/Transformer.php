@@ -102,7 +102,7 @@ class Transformer implements ITransformer
     private function transformNode(Node $node): EditableNode
     {
         $transformers = clone $this->transformers;
-        /**
+        /*
          * @var INodeTransformer<Node>
          */
         foreach ($transformers as $transformer) {
@@ -112,13 +112,13 @@ class Transformer implements ITransformer
                 }
                 ++$this->depth;
 
-                foreach ($this->preProcessors as $processor) {
+                foreach (clone $this->preProcessors as $processor) {
                     $node = $processor->process($node, $this->depth);
                 }
 
                 $editable = $transformer->transform($node, $this);
 
-                foreach ($this->postProcessors as $processor) {
+                foreach (clone $this->postProcessors as $processor) {
                     $editable = $processor->process($node, $editable, $this->depth);
                 }
 
