@@ -51,7 +51,8 @@ shell_exec('hackfmt -i ' . escapeshellarg(__DIR__) . '/code.hack');
 ```
 
 `code.php` : 
-```
+
+```php
 <?php declare(strict_types=1);
 
 /**
