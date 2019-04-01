@@ -46,7 +46,7 @@ $transformer->addNodeTransformer(new Transformer\IdentifierTransformer())
 
 $php = file_get_contents(__DIR__ . '/code.php');
 $hack = $hackifier->convert($php);
-file_put_contents(__DIR__ . '/code.hack');
+file_put_contents(__DIR__ . '/code.hack', $hack);
 shell_exec('hackfmt -i ' . escapeshellarg(__DIR__) . '/code.hack');
 ```
 
