@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace Hackifier\HackAST;
 
 use function array_filter;
+use function array_reverse;
 use Closure;
 use Hackifier\Exception\LogicException;
 
@@ -152,7 +153,7 @@ abstract class EditableNode
     }
 
     /**
-     * @return array<int, EditableNode>
+     * @return EditableNode[]
      */
     public function toVec(): array
     {
@@ -269,10 +270,8 @@ abstract class EditableNode
      */
     public function getLastToken(): ?EditableToken
     {
-        /*
-         * @var EditableNode
-         */
-        foreach (\array_reverse($this->getChildren()) as $child) {
+        /** @var EditableNode $child */
+        foreach (array_reverse($this->getChildren()) as $child) {
             if (!$child->isMissing()) {
                 return $child->getLastToken();
             }
@@ -327,9 +326,6 @@ abstract class EditableNode
             if (null === $token) {
                 throw new LogicException('Unable to find token to insert trivia.');
             }
-            /*
-             * @var EditableToken $token
-             */
             assert($token instanceof EditableToken);
             // Inserting trivia after token is inserting to the left end of
             // the trailing trivia.

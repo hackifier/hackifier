@@ -41,7 +41,7 @@ final class EditableList extends EditableNode
     }
 
     /**
-     * @return array<int, EditableNode>
+     * @return EditableNode[]
      */
     public function toVec(): array
     {
@@ -163,9 +163,7 @@ final class EditableList extends EditableNode
         $new_parents = $parents;
         $new_parents[] = $this;
 
-        /**
-         * @var EditableNode
-         */
+        /** @var EditableNode $child */
         foreach ($this->getChildren() as $child) {
             $new_child = $child->rewrite($rewriter, $new_parents);
 
