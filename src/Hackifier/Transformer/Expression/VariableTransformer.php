@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace Hackifier\Transformer\Expression;
 
 use Hackifier\HackAST\EditableNode;
+use Hackifier\HackAST\EditableToken;
 use function Hackifier\HackAST\Missing;
 use Hackifier\HackAST\Syntax\VariableExpression;
 use Hackifier\HackAST\Token\DollarToken;
@@ -36,8 +37,7 @@ class VariableTransformer extends AbstractTransformer
      */
     public function transform($node, ITransformer $transformer): EditableNode
     {
-        $name = $node->name instanceof Node ? $transformer->transform($node->name) : new NameToken(Missing(), Missing(), $node->name);
-        $name = $name->getText();
+        $name = $node->name instanceof Node ? $transformer->transform($node->name)->getCode() : $node->name;
 
         $variable = new VariableExpression(
             new VariableToken(

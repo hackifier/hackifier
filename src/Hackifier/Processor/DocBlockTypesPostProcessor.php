@@ -62,7 +62,12 @@ class DocBlockTypesPostProcessor implements IPostProcessor
             return $hack;
         }
 
-        $tags = DocComment::parse($php->getDocComment()->getText())['specials'] ?? [];
+        $doc = $php->getDocComment();
+        if (null === $doc) {
+            return $hack;
+        }
+
+        $tags = DocComment::parse($doc->getText())['specials'] ?? [];
         $return = array_values($tags['return'] ?? []);
         $params = array_values($tags['param'] ?? []);
 
@@ -80,6 +85,10 @@ class DocBlockTypesPostProcessor implements IPostProcessor
             /** @var string $param */
             foreach ($params as $param) {
                 $dollarSign = strpos($param, '$');
+                if (false === $dollarSign) {
+                    continue;
+                }
+
                 $variable = trim(substr($param, $dollarSign));
                 $typeString = trim(substr($param, 0, $dollarSign - 1));
                 $type = $this->getTypeNodeFromString($typeString);
@@ -132,12 +141,7 @@ class DocBlockTypesPostProcessor implements IPostProcessor
     protected function getTypeNodeFromString(string $typeString): ?EditableNode
     {
         $union = Type::parseString($typeString);
-
-        if ($union instanceof Type\Union) {
-            return $this->getTypeNodeFromUnion($union);
-        }
-
-        return $this->getTypeNodeFromAtomic($union);
+        return $this->getTypeNodeFromUnion($union);
     }
 
     protected function getTypeNodeFromUnion(Type\Union $union): EditableNode
