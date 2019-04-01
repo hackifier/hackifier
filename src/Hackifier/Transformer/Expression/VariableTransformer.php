@@ -15,8 +15,10 @@ namespace Hackifier\Transformer\Expression;
 
 use Hackifier\HackAST\EditableNode;
 use function Hackifier\HackAST\Missing;
+use Hackifier\HackAST\Syntax\VariableExpression;
 use Hackifier\HackAST\Token\DollarToken;
 use Hackifier\HackAST\Token\NameToken;
+use Hackifier\HackAST\Token\VariableToken;
 use Hackifier\ITransformer;
 use Hackifier\Transformer\AbstractTransformer;
 use PhpParser\Node;
@@ -34,12 +36,18 @@ class VariableTransformer extends AbstractTransformer
      */
     public function transform($node, ITransformer $transformer): EditableNode
     {
-        return $this->comments($node, $this->list(
-            new DollarToken(Missing(), Missing()),
-            $node->name instanceof Node ?
-                $transformer->transform($node->name) :
-                new NameToken(Missing(), Missing(), $node->name)
-        ));
+        $name = $node->name instanceof Node ? $transformer->transform($node->name) : new NameToken(Missing(), Missing(), $node->name);
+        $name = $name->getText();
+
+        $variable = new VariableExpression(
+            new VariableToken(
+                new DollarToken(Missing(), Missing()),
+                Missing(),
+                $name
+            )
+        );
+
+        return $this->comments($node, $variable);
     }
 
     public function supports(Node $node): bool
