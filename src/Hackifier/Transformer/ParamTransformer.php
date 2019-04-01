@@ -16,6 +16,7 @@ namespace Hackifier\Transformer;
 use Hackifier\HackAST\EditableNode;
 use function Hackifier\HackAST\Missing;
 use Hackifier\HackAST\Syntax\ParameterDeclaration;
+use Hackifier\HackAST\Syntax\SimpleTypeSpecifier;
 use Hackifier\HackAST\Token\EqualToken;
 use Hackifier\HackAST\Token\InoutToken;
 use Hackifier\HackAST\Token\MixedToken;
@@ -50,6 +51,8 @@ class ParamTransformer extends AbstractTransformer
         } else {
             $type = new MixedToken(Missing(), Missing());
         }
+
+        $type = new SimpleTypeSpecifier($type);
 
         $type = $this->list(Missing(), $type, new WhiteSpace(' '));
 
