@@ -38,62 +38,85 @@ $transformer->addNodeTransformer(new Transformer\IdentifierTransformer())
     ->addNodeTransformer(new Transformer\Statement\ElseTransformer())
     ->addNodeTransformer(new Transformer\Expression\EmptyTransformer())
     ->addNodeTransformer(new Transformer\Expression\TernaryTransformer())
-    ->addNodeTransformer(new Transformer\Scalar\MagicConstantTransformer());
+    ->addNodeTransformer(new Transformer\Scalar\MagicConstantTransformer())
 
-$php = <<<CODE
+    // post-processors
+    ->addPostProcessor(new Hackifier\Processor\DocBlockTypesPostProcessor())
+    ->addPostProcessor(new Hackifier\Processor\FloatToNumPostProcessor());
+
+$php = file_get_contents(__DIR__ . '/code.php');
+$hack = $hackifier->convert($php);
+file_put_contents(__DIR__ . '/code.hack');
+shell_exec('hackfmt -i ' . escapeshellarg(__DIR__) . '/code.hack');
+```
+
+`code.php` : 
+```
 <?php declare(strict_types=1);
 
 /**
- * dummy sample
+ * @param string $str
+ * @param null|string|int $other
+ * @return string
  */
-function foo(string \$foo, int \$bar = 0, \$baz = null) {
-    // qux
-    if (strpos(\$foo, 'qux') !== false || \$baz === 'baz') {
-        return str_replace(' ', '', ucwords(str_replace('_', ' ', \$foo)));
-    } elseif (empty(\$foo)) {
-        return;
-    } else {
-        // foo
-        return empty(\$baz) ? \$bar : \$baz;
-    }
+function concat(string $str, $other)
+{
+    return $str . $other;
 }
 
-CODE;
+/**
+ * @param int|float $a
+ * @param int|float $b
+ * @return float
+ */
+function add($a, $b): float
+{
+    return $a + $b;
+}
 
-echo $hackifier->convert($php);
+/**
+ * @return stdClass::class
+ */
+function baz()
+{
+    return 'stdClass';
+}
 ```
 
 Run the following in your console :
 
 ```console
-$ touch sample.hack
-$ php hackifier.php >> sample.hack
-$ hackfmt -i sample.hack
-$ hh_client sample.hack
-No errors!
+$ php hackifier.php
 ```
 
-`sample.hack` :
+`code.hack` :
 
 ```hack
 /**
- * dummy sample
+ * @param string $str
+ *
+ * @param null|string|int $other
+ *
+ * @return string
  */
-function foo(string $foo, int $bar = 0, mixed $baz = null): mixed {
-  // qux
-  if (strpos($foo, 'qux') !== false || $baz === 'baz') {
-    return str_replace(' ', '', ucwords(str_replace('_', ' ', $foo)));
-  } elseif (
-    /* HH_FIXME[4016] empty cannot be used in a completely type safe way and so is banned in strict mode */
-    empty($foo)
-  ) {
-    return;
-  } else {
-    // foo
-    return
-      /* HH_FIXME[4016] empty cannot be used in a completely type safe way and so is banned in strict mode */
-      empty($baz) ? $bar : $baz;
-  }
+function concat(string $str, ?arraykey $other): string {
+  return $str.$other;
 }
 
+/**
+ * @param int|float $a
+ * @param int|float $b
+ *
+ * @return float
+ */
+function add(num $a, num $b): num {
+  return $a + $b;
+}
+
+/**
+ * @return stdClass::class
+ */
+function baz(): classname<stdClass> {
+  return 'stdClass';
+}
 ```
