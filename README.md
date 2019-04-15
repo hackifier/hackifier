@@ -46,12 +46,13 @@ $transformer->addNodeTransformer(new Transformer\IdentifierTransformer())
 
 $php = file_get_contents(__DIR__ . '/code.php');
 $hack = $hackifier->convert($php);
-file_put_contents(__DIR__ . '/code.hack');
+file_put_contents(__DIR__ . '/code.hack', $hack);
 shell_exec('hackfmt -i ' . escapeshellarg(__DIR__) . '/code.hack');
 ```
 
 `code.php` : 
-```
+
+```php
 <?php declare(strict_types=1);
 
 /**
@@ -94,9 +95,7 @@ $ php hackifier.php
 ```hack
 /**
  * @param string $str
- *
  * @param null|string|int $other
- *
  * @return string
  */
 function concat(string $str, ?arraykey $other): string {
@@ -106,7 +105,6 @@ function concat(string $str, ?arraykey $other): string {
 /**
  * @param int|float $a
  * @param int|float $b
- *
  * @return float
  */
 function add(num $a, num $b): num {
